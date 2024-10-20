@@ -21,7 +21,7 @@
                       <div class="col-5">
                           <!-- Formulário de Depósito -->
                           <div class="deposit-form">
-                              <h3>Depositar na Carteira</h3>
+                              <h3>Depositar na Carteira ({{ Auth::user()->count_number }})</h3>
 
                               <!-- Formulário -->
                               <form action="{{ route('wallet.deposit') }}" method="POST">
