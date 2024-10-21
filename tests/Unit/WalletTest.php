@@ -16,7 +16,7 @@ class WalletTest extends TestCase
     public function test_it_can_get_the_balance_of_the_wallet(): void
     {
         $user = User::factory()->create();
-        $wallet = Wallet::factory()->create(['user_id' => $user->id, 'balance' => 100]);
+        $user->wallet->update(['balance' => 100]);
 
         $carteiraService = new CarteiraService();
         $balance = $carteiraService->getBalance($user);
@@ -27,7 +27,7 @@ class WalletTest extends TestCase
     public function test_it_can_deposit_money_in_the_wallet(): void
     {
         $user = User::factory()->create();
-        $wallet = Wallet::factory()->create(['user_id' => $user->id, 'balance' => 100]);
+        $user->wallet->update(['balance' => 100]);
 
         $carteiraService = new CarteiraService();
         $carteiraService->deposit($user, 50);
@@ -41,8 +41,11 @@ class WalletTest extends TestCase
         $sender = User::factory()->create();
         $receiver = User::factory()->create();
 
-        Wallet::factory()->create(['user_id' => $sender->id, 'balance' => 100]);
-        Wallet::factory()->create(['user_id' => $receiver->id, 'balance' => 50]);
+        // Wallet::factory()->create(['user_id' => $sender->id, 'balance' => 100]);
+        // Wallet::factory()->create(['user_id' => $receiver->id, 'balance' => 50]);
+
+        $sender->wallet->update(['balance' => 100]);
+        $receiver->wallet->update(['balance' => 50]);
 
         $carteiraService = new CarteiraService();
         $carteiraService->transfer($sender, $receiver, 50);

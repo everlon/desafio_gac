@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Wallet;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Transaction;
@@ -16,16 +17,14 @@ class TransactionTest extends TestCase
     public function test_it_creates_a_transaction(): void
     {
         $sender = User::factory()->create();
-        $receiver = User::factory()->create();
         $transaction = Transaction::create([
-            'sender_id' => $sender->id,
-            'receiver_id' => $receiver->id,
+            'receiver_id' => $sender->id,
             'amount' => 100,
-            'type' => 'transfer'
+            'type' => 'deposit'
         ]);
 
         $this->assertEquals(100, $transaction->amount);
-        $this->assertEquals('transfer', $transaction->type);
+        $this->assertEquals('deposit', $transaction->type);
     }
 
 
@@ -35,13 +34,25 @@ class TransactionTest extends TestCase
         $receiver = User::factory()->create();
         $walletService = new CarteiraService();
 
+        $sender->wallet->update(['balance' => 100]);
+        $receiver->wallet->update(['balance' => 0]);
+
+        Transaction::create([
+            'sender_id' => $sender->id,
+            'amount' => 100,
+            'type' => 'deposit'
+        ]);
+
         $walletService->transfer($sender, $receiver, 50);
-        $transaction = Transaction::where('sender_id', $sender->id)->first();
+        $transaction = Transaction::where('type', 'transfer')->where('sender_id', $sender->id)->first();
 
         // Revertendo a transação
         $walletService->reverseTransaction($transaction);
 
-        $this->assertEquals(100, $sender->wallet->balance);
-        $this->assertEquals(0, $receiver->wallet->balance);
+        $sender_wallet = Wallet::where('user_id', $sender->id)->first();
+        $receiver_wallet = Wallet::where('user_id', $receiver->id)->first();
+
+        $this->assertEquals(100, $sender_wallet->balance);
+        $this->assertEquals(0, $receiver_wallet->balance);
     }
 }
