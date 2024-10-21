@@ -1,0 +1,65 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true
+
+   PASS  Tests\Unit\TransactionTest
+  ✓ it creates a transaction                                             0.46s  
+  ✓ it can reverse a transaction                                         0.02s  
+
+   PASS  Tests\Unit\WalletTest
+  ✓ it can get the balance of the wallet                                 0.01s  
+  ✓ it can deposit money in the wallet                                   0.01s  
+  ✓ it can transfer money to another user                                0.02s  
+
+   PASS  Tests\Feature\Auth\AuthenticationTest
+  ✓ login screen can be rendered                                         0.02s  
+  ✓ users can authenticate using the login screen                        0.03s  
+  ✓ users can not authenticate with invalid password                     0.23s  
+  ✓ users can logout                                                     0.01s  
+
+   PASS  Tests\Feature\Auth\EmailVerificationTest
+  ✓ email verification screen can be rendered                            0.02s  
+  ✓ email can be verified                                                0.02s  
+  ✓ email is not verified with invalid hash                              0.02s  
+
+   PASS  Tests\Feature\Auth\PasswordConfirmationTest
+  ✓ confirm password screen can be rendered                              0.02s  
+  ✓ password can be confirmed                                            0.01s  
+  ✓ password is not confirmed with invalid password                      0.22s  
+
+   PASS  Tests\Feature\Auth\PasswordResetTest
+  ✓ reset password link screen can be rendered                           0.01s  
+  ✓ reset password link can be requested                                 0.03s  
+  ✓ reset password screen can be rendered                                0.02s  
+  ✓ password can be reset with valid token                               0.03s  
+
+   PASS  Tests\Feature\Auth\PasswordUpdateTest
+  ✓ password can be updated                                              0.02s  
+  ✓ correct password must be provided to update password                 0.01s  
+
+   PASS  Tests\Feature\Auth\RegistrationTest
+  ✓ registration screen can be rendered                                  0.01s  
+  ✓ new users can register                                               0.01s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                        0.01s  
+
+   PASS  Tests\Feature\ProfileTest
+  ✓ profile page is displayed                                            0.02s  
+  ✓ profile information can be updated                                   0.01s  
+  ✓ email verification status is unchanged when the email address is un… 0.01s  
+  ✓ user can delete their account                                        0.01s  
+  ✓ correct password must be provided to delete account                  0.01s  
+
+   PASS  Tests\Feature\TransactionFeatureTest
+  ✓ example                                                              0.01s  
+
+   PASS  Tests\Feature\WalletFeatureTest
+  ✓ it can show user balance on dashboard                                0.01s  
+  ✓ it can make a deposit                                                0.01s  
+  ✓ it can transfer funds to another user                                0.02s  
+  ✓ it canot transfer funds to another user with no balance              0.02s  
+
+  Tests:    35 passed (89 assertions)
+  Duration: 1.46s
+
