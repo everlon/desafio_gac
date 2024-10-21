@@ -1,66 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Carteira com Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um sistema simples de gerenciamento de carteiras para um desafio em Laravel, onde é possível realizar depósitos, transferências entre usuários e visualizar transações. O sistema está preparado para rodar em um ambiente Docker e possui testes automatizados.
 
-## About Laravel
+## Requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Docker
+- Docker Compose
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Configuração e Subida dos Containers
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Passos para iniciar o projeto:
 
-## Learning Laravel
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/seu-repositorio.git   
+   cd seu-repositorio
+   ```
+2. **Subir os containers Docker**:
+   No diretório raiz do projeto, execute:
+   ```bash
+   docker-compose up --build
+   ```
+   Isso criará e iniciará os containers definidos no `docker-compose.yml`:
+   - O container do **Laravel** estará disponível na porta `8000`.
+   - O **MySQL** estará rodando na porta `3306`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Copiar o projeto para o container**:
+   O projeto irá ser copiado para o container confirme o arquivo docker-composer.yml
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **Configurar o arquivo `.env`**:
+   - Copie o arquivo `.env.example` e renomeie para `.env`.
+   - No arquivo `.env`, ajuste as variáveis de ambiente para conectar ao banco de dados:
+     ```env
+     DB_CONNECTION=mysql
+     DB_HOST=db
+     DB_PORT=3306
+     DB_DATABASE=laravel_wallet
+     DB_USERNAME=user
+     DB_PASSWORD=password
+     ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5 **Rodar as migrações do banco de dados**:
+   Execute as migrações para criar as tabelas no banco de dados:
+   ```bash
+   php artisan migrate:flush
+   ```
 
-## Laravel Sponsors
+## Uso do Sistema
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Acesse o sistema no navegador em: `http://localhost:8000`.
+- Após o login, você pode visualizar o saldo da sua carteira, realizar depósitos e transferências.
+- As transações podem ser visualizadas em uma página separada, listando os envios e recebimentos.
+- Se necessário acesse `http://localhost:8000/register` para criar seu usuário.
+- Irá ser criado o número de sua conta automaticamente que será necessária para receber os valores no sistema.
 
-### Premium Partners
+### Funcionalidades Principais:
+- **Depósito**: Permite adicionar fundos à carteira.
+- **Transferência**: Permite transferir saldo para outro usuário.
+- **Visualizar transações / Extrato**: Acompanhe o histórico de transações (enviadas e recebidas).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Executando Testes
 
-## Contributing
+1. **Configurar o banco de dados de testes**:
+   No arquivo `.env.testing`, configure o banco de dados de testes:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=db
+   DB_PORT=3306
+   DB_DATABASE=laravel_wallet_test
+   DB_USERNAME=user
+   DB_PASSWORD=password
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Rodar as migrações de teste**:
+   Execute as migrações para o ambiente de teste:
+   ```bash
+   php artisan migrate --env=testing
+   ```
 
-## Code of Conduct
+3. **Executar os testes**:
+   Para rodar os testes automatizados, execute:
+   ```bash
+   php artisan test
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   Os testes incluem verificações das funcionalidades de depósito, transferência e visualização de transações, garantindo que o sistema esteja funcionando corretamente.
